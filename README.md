@@ -9,6 +9,16 @@ Reliability engineering on two public, real-world data sources:
 
 ## Results
 
+## Summary: the four questions a cell field-reliability team asks
+
+| Question | Method | Answer (real data) |
+|---|---|---|
+| What is the expected failure rate of an affected population? | Right-censored Weibull fit on 57,414 recalled vehicles (2017–19 Chevrolet Bolt), using only data from before the recall | β = 1.22 (95% CI 0.86–1.71); projected **1.6 battery complaints per 1,000 vehicles by 8 years in service (≈92 vehicles)** without the remedy |
+| Did the corrective action work? | Two independent checks: model-expected vs. observed failures, and a difference-in-differences test against a Nissan Leaf control | Observed / expected = **0.33** (95% CI 0.15–0.63); Leaf-controlled rate ratio = 0.33 (p = 0.07). Both point to about a two-thirds reduction |
+| Can bad cells be caught early? | Features from the first 100 cycles; early-failure classifier and conformal prediction intervals | Cells failing before 550 cycles: **86% recall, 78% precision, AUC 0.91** on held-out cells. 90% intervals covered 87.5% of an unseen test batch |
+| Can complaint data warn of a recall in advance? | Pre-specified fleet-size-normalized p-chart, scored against all 16 traction-battery recalls | **No.** 1 of 7 first-in-family recalls had an alert, and that hit looks coincidental. Early warning needs vehicle telemetry, not complaint counts |
+
+
 ### 1. Weibull life-data analysis by batch (cells)
 | Batch | n | Shape β | Scale η (cycles) | B10 life (95% bootstrap CI) |
 |---|---|---|---|---|
@@ -25,16 +35,22 @@ Reliability engineering on two public, real-world data sources:
 - β > 1 in every batch indicates wear-out failure.
 - The pooled Weibull fit is rejected (KS p = 0.008) because it mixes batches and policies. Use the per-batch or covariate-adjusted model, not the pooled B10, for decisions.
 
-### 2. Early-life failure prediction (first 100 cycles)
-Elastic net on 6 early-life features (ΔQ₁₀₀₋₁₀(V) variance/min, capacity, fade slopes). The model is trained on the authors' train split and tested on their two held-out splits.
+### 2. Early-life failure prediction and screening (first 100 cycles)
+- **Model:** elastic net on 8 early-life features (ΔQ₁₀₀₋₁₀(V) variance, minimum, skewness and kurtosis; capacity at cycles 2 and 100; max − initial capacity; late fade slope). Trained on the authors' train split (`src/06_cell_screening.py`).
 
 | Split | RMSE (cycles) | MAPE |
 |---|---|---|
-| Test 1 | 124.9 | 13.3% |
-| Test 2 (unseen batch) | 229.2 | 12.7% |
+| Test 1 | 87.0 | 13.0% |
+| Test 2 (unseen batch) | 191.4 | 9.6% |
 | Variance-only baseline, Test 1 / Test 2 | 137.9 / 195.9 | 14.7% / 11.4% |
 
-The variance-only baseline reproduces the published Severson et al. values (138 / 196), which validates the pipeline. The multivariate model is better on Test 1 but **worse on the unseen batch**. That generalization gap is the result to report.
+- **Pipeline check:** the variance-only baseline reproduces the published Severson et al. values (138 / 196).
+- **Generalization:** the gain on the unseen batch is small (191 vs 196 cycles). The model doesn't transfer well across batches.
+- **Prediction intervals:** split-conformal 90% intervals were calibrated on Test 1 and evaluated on Test 2. They covered **87.5%** of unseen-batch cells, with a median width of 435 cycles.
+- **Early-failure screen (cycle life < 550):**
+  - Test 1: 21 of 43 cells failed early. The classifier flagged 23, for accuracy 0.81, precision 0.78, recall 0.86 and AUC 0.91.
+  - Test 2: only 1 early failure. It was caught, along with 4 false flags. That set is too small to judge precision.
+- **Superseded version:** the earlier 6-feature model in `src/02_cell_reliability.py` scored 124.9 / 229.2 RMSE and is kept for transparency.
 
 ### 3. SPC and batch traceability (cells)
 - **Setup:** Phase I limits (I-MR and EWMA λ = 0.2, plus Western Electric rules 1, 2 and 4) come from the first batch. Phase II monitors the next two batches.
@@ -51,15 +67,25 @@ The variance-only baseline reproduces the published Severson et al. values (138 
 ### 5. Field reliability (NHTSA)
 - **Battery complaint share:** Bolt 18.4%, Leaf 12.8%, ID.4 5.9%, Kona Electric 5.5%, Model 3 1.6%, Model Y 1.0%.
 - **Age at battery complaint** (first 48 months in service, model years with ≥48 months observed): Weibull β = 1.8–2.7 across nameplates, so failures increase with age. This is conditional on a complaint being filed, so treat it as descriptive.
-- **Affected population:** every 2017–2022 Bolt was recalled, 109,828 units (21V560 + 21V650). That fleet has 182 component-coded battery complaints, or **1.66 per 1,000 vehicles**. The README tables and `outputs/affected_population.csv` list the official units for 6 recall cohorts.
+- **Affected population (observed):** every 2017–2022 Bolt was recalled, 109,828 units (21V560 + 21V650). That fleet has 182 component-coded battery complaints, or **1.66 per 1,000 vehicles**. Official units for 6 recall cohorts are in `outputs/affected_population.csv`.
+- **Failure-rate prediction for an affected population** (`src/05_population_failure_model.py`):
+  - Cohort and censoring: 57,414 Bolt MY2017–19 vehicles (recall 21V560). The 30 component-coded battery complaints before the first recall (Nov 2020) count as failures. Every other vehicle is right-censored at its age on Oct 31, 2020.
+  - Model-year split: units are split across model years by GM-reported US sales (2016–17: 23,876; 2018: 18,019; 2019: 16,418; total 58,313, within 1.6% of the recall population).
+  - Fit: β = 1.22 (95% CI 0.86–1.71), so wear-out can't be ruled in or out. Projected cumulative complaint rate by 96 months in service: 1.59 per 1,000 (95% CI 1.15–4.58), or about 92 vehicles.
+  - Observed vs. expected: without the remedy, the model expects 27.1 complaints (95% CI 18.2–93.3) between Jul 2022 and Jul 2024. 9 were observed, an **O/E of 0.33** (Poisson 95% CI 0.15–0.63). This is consistent with the difference-in-differences result below.
+  - Sensitivity: the model-year split matters. Putting all units in MY2017 gives O/E 0.60 (CI 0.27–1.13), and all in MY2019 gives 0.02. The sales-weighted split is the defensible one.
+  - The projection to 96 months extrapolates beyond the ~46 months of pre-recall exposure.
 - **Corrective-action effectiveness** (Bolt MY2017–19 battery-module replacement):
   - Design: Poisson difference-in-differences, Bolt MY2017–19 vs Leaf MY2011–19 (both closed cohorts). The recall/remedy rollout (Nov 2020–Jun 2022) is excluded.
   - Primary window, post period ending Jul 2024 (before the Leaf's own battery recall): Bolt battery complaints fell **56%** (0.82 to 0.36 a month), while the Leaf rose 0.36 to 0.48. Rate ratio 0.33 (95% CI 0.10–1.09, p = 0.07); broad definition 0.34 (CI 0.15–0.80, p = 0.01).
   - Bolt battery-fire complaints (all model years, broad definition): 12 in 2020–21, then 1 in 2022 and 1 in all of 2023–2025.
   - The full window to Dec 2025 gives 0.11, but that is inflated by the Leaf's own recall spike in the control group, so it is reported as a sensitivity check only.
-- **Control-chart alerting** (a script run on downloaded data, not a deployed monitoring system):
-  - Rule: monthly battery complaints by filed month against a c-chart (Poisson 99.865% limit on a trailing 12-month baseline) plus an EWMA. This raised 14 alerts in 577 nameplate-months.
-  - Only **3 of 16** battery recalls had an alert in the 12 months before them, and all 3 were follow-on recalls after an earlier recall of the same vehicle family. Complaint volume alone gave **no independent early warning**. It is useful for post-recall monitoring, not for detecting a new issue.
+- **Early-warning alerting** (scripts run on downloaded data, not a deployed monitoring system):
+  - **v1, volume c-chart:** monthly battery complaints against a Poisson limit on a trailing 12-month baseline. It raised 14 alerts in 577 nameplate-months, and 3 of 16 recalls had an alert in the prior 12 months. All 3 were follow-on recalls after an earlier recall of the same nameplate, so they reflect recall-driven reporting, not early warning.
+  - **v2, fleet-size-normalized p-chart, rule fixed before scoring** (`src/07_pchart_alerting.py`): it tracks the share of a nameplate's complaints that are battery-coded, so fleet growth doesn't trigger alerts. It raised 5 alerts in 605 nameplate-months, far more specific.
+    - It caught only **1 of 7 first-in-family recalls**: Tesla Model 3, 5 months before 23V434. That alert rested on 3 complaints, and the recall covered 26 vehicles, so it is likely coincidence.
+    - The VW ID.4 spike in Jan 2024 (11 of 22 complaints battery-coded) came 23 months before the next ID.4 battery recall. That's outside the pre-set 12-month window, so it isn't counted.
+  - **Conclusion:** public complaint data can't give reliable early warning. That requires fleet telemetry (cell voltages, temperatures, BMS fault codes) linked to returned-pack teardown results.
 
 ## Figures
 `outputs/figures/`: Weibull probability plot by batch, SPC chart, DOE interaction, corrective-action check.
@@ -74,10 +100,13 @@ python src/01_build_cells.py         # join SI Table 9 + Q(V) arrays, extract fe
 python src/02_cell_reliability.py    # Weibull, AFT, prediction, SPC, DOE
 python src/03_field_reliability.py   # NHTSA reliability, affected population, DiD, alerting
 python src/04_figures_and_tableau.py
+python src/05_population_failure_model.py   # censored Weibull, affected-population projection, O/E
+python src/06_cell_screening.py             # improved early-life model, conformal intervals, early-failure classifier
+python src/07_pchart_alerting.py            # fleet-normalized alerting, scored vs all recalls
 ```
 The NHTSA pull (browser-side `fetch` against `api.nhtsa.gov`) is saved in `data/raw/`. Complaint fields kept: model, model year, ODI number, incident and filed month, component and narrative battery flags, fire, crash, injuries.
 
 ## Limitations
-- Complaints are not returns. There is no sales-volume denominator except where a full-fleet recall gives one (Bolt).
+- Complaints are not returns, and complaints undercount true failures. Denominators exist only where a full-fleet recall gives one (Bolt), and the model-year split relies on calendar-year sales. The population model treats each complaint as one failed vehicle and ignores vehicles removed by buyback.
 - Batches are the authors' test runs, not confirmed production lots, and all cells are one commercial cell type. This shows batch-level traceability methods, not supplier or production-lot traceability.
 - The DOE analyzes the authors' designed policy set. I did not choose the design points.

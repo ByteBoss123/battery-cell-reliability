@@ -1,0 +1,103 @@
+{
+ "cohort_units": 57414,
+ "pre_recall_failures": 30,
+ "observed_post_remedy_2022-07_to_2024-07": 9,
+ "scenarios": {
+  "sales_weighted": {
+   "shape_beta": 1.22,
+   "beta_95": [
+    0.86,
+    1.71
+   ],
+   "scale_months": 19205.0,
+   "projected_complaint_rate_per_1000_by_96mo": 1.59,
+   "proj_96_95": [
+    1.15,
+    4.58
+   ],
+   "projected_units_affected_by_96mo": 92,
+   "expected_no_remedy_in_window": 27.1,
+   "expected_95": [
+    18.2,
+    93.3
+   ],
+   "observed_over_expected": 0.33,
+   "OE_95_poisson": [
+    0.15,
+    0.63
+   ]
+  },
+  "equal_split": {
+   "shape_beta": 1.27,
+   "beta_95": [
+    0.9,
+    1.78
+   ],
+   "scale_months": 14209.0,
+   "projected_complaint_rate_per_1000_by_96mo": 1.76,
+   "proj_96_95": [
+    1.27,
+    5.35
+   ],
+   "projected_units_affected_by_96mo": 101,
+   "expected_no_remedy_in_window": 30.5,
+   "expected_95": [
+    20.3,
+    108.4
+   ],
+   "observed_over_expected": 0.3,
+   "OE_95_poisson": [
+    0.13,
+    0.56
+   ]
+  },
+  "all_MY2017": {
+   "shape_beta": 0.98,
+   "beta_95": [
+    0.69,
+    1.41
+   ],
+   "scale_months": 105695.0,
+   "projected_complaint_rate_per_1000_by_96mo": 1.02,
+   "proj_96_95": [
+    0.76,
+    2.78
+   ],
+   "projected_units_affected_by_96mo": 59,
+   "expected_no_remedy_in_window": 15.1,
+   "expected_95": [
+    10.3,
+    53.9
+   ],
+   "observed_over_expected": 0.6,
+   "OE_95_poisson": [
+    0.27,
+    1.13
+   ]
+  },
+  "all_MY2019": {
+   "shape_beta": 3.0,
+   "beta_95": [
+    2.1,
+    4.3
+   ],
+   "scale_months": 303.0,
+   "projected_complaint_rate_per_1000_by_96mo": 31.12,
+   "proj_96_95": [
+    12.53,
+    291.41
+   ],
+   "projected_units_affected_by_96mo": 1787,
+   "expected_no_remedy_in_window": 512.6,
+   "expected_95": [
+    223.9,
+    4131.8
+   ],
+   "observed_over_expected": 0.02,
+   "OE_95_poisson": [
+    0.01,
+    0.03
+   ]
+  }
+ }
+}

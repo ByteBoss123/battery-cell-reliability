@@ -15,8 +15,8 @@ Connect Tableau Desktop / Tableau Public to the CSVs in this folder (Text file c
 ## Sheet 3 — DOE interaction  (`cells.csv`)
 - Columns `Q1`, Rows `cycle_life` (log axis), Color = bin of `C1` (≤4.5, 4.5–5.5, >5.5), trend lines per color (exponential/log model).
 
-## Sheet 4 — Field battery complaints & alerts  (`field_alerts_monthly.csv`)
-- Columns `month` (continuous month), Rows `count` (bar) + `ucl` (line, dual axis). Color `alert`. Filter `model`.
+## Sheet 4 — Field battery-share p-chart (`pchart_alerts_monthly.csv`; v1 volume chart in `field_alerts_monthly.csv`)
+- Columns `month` (continuous month), Rows `share` (circle) + `ucl` and `p_bar` (lines, dual axis). Color `alert`. Filter `model`.
 - Add recall report dates as reference lines (from `affected_population.csv` / README table).
 
 ## Sheet 5 — Corrective-action check  (`bolt_did_panel.csv`)
@@ -26,5 +26,5 @@ Connect Tableau Desktop / Tableau Public to the CSVs in this folder (Text file c
 - Text table: campaign, model, model_years, recall_report, units_affected, batt_complaints_before_recall, batt_complaints_total.
 
 ## Dashboard
-Top row: KPI text (fleet B10 = 331 cycles; Bolt complaints −56% post-remedy; 3 of 16 recalls preceded by an alert, all follow-on recalls).
+Top row: KPI text (fleet B10 = 331 cycles; Bolt O/E after remedy = 0.33; early-failure recall 86%; 1 of 7 first-in-family recalls caught by alerting).
 Row 2: Sheet 1 | Sheet 2. Row 3: Sheet 4 (with `model` filter applied to sheet 4 only) | Sheet 5. Row 4: Sheet 3 | Sheet 6.

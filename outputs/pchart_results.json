@@ -1,0 +1,136 @@
+{
+ "alert_months": 5,
+ "nameplate_months": 605,
+ "recalls_with_alert": "3/16",
+ "first_in_family_with_alert": "1/7",
+ "detail": [
+  {
+   "campaign": "20V630000",
+   "model": "Hyundai Kona Electric",
+   "report": "2020-10-13",
+   "follow_on": false,
+   "alert_12mo_before": false,
+   "lead_months": NaN
+  },
+  {
+   "campaign": "21V127000",
+   "model": "Hyundai Kona Electric",
+   "report": "2021-03-01",
+   "follow_on": true,
+   "alert_12mo_before": false,
+   "lead_months": NaN
+  },
+  {
+   "campaign": "20V701000",
+   "model": "Chevrolet Bolt EV/EUV",
+   "report": "2020-11-13",
+   "follow_on": false,
+   "alert_12mo_before": false,
+   "lead_months": NaN
+  },
+  {
+   "campaign": "21V560000",
+   "model": "Chevrolet Bolt EV/EUV",
+   "report": "2021-07-23",
+   "follow_on": true,
+   "alert_12mo_before": true,
+   "lead_months": 0.0
+  },
+  {
+   "campaign": "21V650000",
+   "model": "Chevrolet Bolt EV/EUV",
+   "report": "2021-08-20",
+   "follow_on": true,
+   "alert_12mo_before": true,
+   "lead_months": 1.0
+  },
+  {
+   "campaign": "24V481000",
+   "model": "Chevrolet Bolt EV/EUV",
+   "report": "2024-06-27",
+   "follow_on": false,
+   "alert_12mo_before": false,
+   "lead_months": NaN
+  },
+  {
+   "campaign": "24V812000",
+   "model": "Chevrolet Bolt EV/EUV",
+   "report": "2024-10-31",
+   "follow_on": true,
+   "alert_12mo_before": false,
+   "lead_months": NaN
+  },
+  {
+   "campaign": "22V162000",
+   "model": "VW ID.4",
+   "report": "2022-03-16",
+   "follow_on": false,
+   "alert_12mo_before": false,
+   "lead_months": NaN
+  },
+  {
+   "campaign": "23V040000",
+   "model": "VW ID.4",
+   "report": "2023-02-01",
+   "follow_on": true,
+   "alert_12mo_before": false,
+   "lead_months": NaN
+  },
+  {
+   "campaign": "25V836000",
+   "model": "VW ID.4",
+   "report": "2025-12-04",
+   "follow_on": false,
+   "alert_12mo_before": false,
+   "lead_months": NaN
+  },
+  {
+   "campaign": "26V028000",
+   "model": "VW ID.4",
+   "report": "2026-01-22",
+   "follow_on": true,
+   "alert_12mo_before": false,
+   "lead_months": NaN
+  },
+  {
+   "campaign": "26V030000",
+   "model": "VW ID.4",
+   "report": "2026-01-22",
+   "follow_on": true,
+   "alert_12mo_before": false,
+   "lead_months": NaN
+  },
+  {
+   "campaign": "26V630000",
+   "model": "VW ID.4",
+   "report": "2026-10-01",
+   "follow_on": true,
+   "alert_12mo_before": false,
+   "lead_months": NaN
+  },
+  {
+   "campaign": "23V434000",
+   "model": "Tesla Model 3",
+   "report": "2023-06-19",
+   "follow_on": false,
+   "alert_12mo_before": true,
+   "lead_months": 5.0
+  },
+  {
+   "campaign": "24V700000",
+   "model": "Nissan Leaf",
+   "report": "2024-09-20",
+   "follow_on": false,
+   "alert_12mo_before": false,
+   "lead_months": NaN
+  },
+  {
+   "campaign": "25V655000",
+   "model": "Nissan Leaf",
+   "report": "2025-10-01",
+   "follow_on": true,
+   "alert_12mo_before": false,
+   "lead_months": NaN
+  }
+ ]
+}

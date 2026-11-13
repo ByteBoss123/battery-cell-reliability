@@ -44,4 +44,7 @@ al.to_csv("tableau/field_alerts_monthly.csv",index=False)
 panel.to_csv("tableau/bolt_did_panel.csv",index=False)
 pd.read_csv("outputs/affected_population.csv").to_csv("tableau/affected_population.csv",index=False)
 wb.to_csv("tableau/weibull_by_lot.csv",index=False)
+import os
+for f in ["pchart_alerts_monthly.csv","pchart_recall_eval.csv"]:
+    if os.path.exists("outputs/"+f): pd.read_csv("outputs/"+f).to_csv("tableau/"+f,index=False)
 print("ok")
