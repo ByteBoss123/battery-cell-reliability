@@ -8,11 +8,11 @@ plt.rcParams.update({"figure.dpi":130,"axes.spines.top":False,"axes.spines.right
 fig,ax=plt.subplots(figsize=(6,4))
 for (lot,g),col in zip(d.groupby("lot"),["#2a6f97","#c44536","#5b8c5a"]):
     x=np.sort(g.cycle_life.values); n=len(x); F=(np.arange(1,n+1)-0.3)/(n+0.4)
-    ax.scatter(np.log(x),np.log(-np.log(1-F)),s=12,color=col,label=f"Lot {lot} (n={n})")
+    ax.scatter(np.log(x),np.log(-np.log(1-F)),s=12,color=col,label=f"Test batch {lot} (n={n})")
     r=wb[wb.lot==lot].iloc[0]; xx=np.linspace(x.min(),x.max(),50)
     ax.plot(np.log(xx),r.shape_beta*(np.log(xx)-np.log(r.scale_eta)),color=col,lw=1)
 ax.axhline(np.log(-np.log(0.9)),ls=":",c="grey"); ax.text(np.log(150),np.log(-np.log(0.9))+0.1,"B10",color="grey")
-ax.set_xlabel("ln(cycles to 80% capacity)"); ax.set_ylabel("ln(-ln(1-F))"); ax.set_title("Weibull probability plot by production lot"); ax.legend(frameon=False)
+ax.set_xlabel("ln(cycles to 80% capacity)"); ax.set_ylabel("ln(-ln(1-F))"); ax.set_title("Weibull probability plot by test batch"); ax.legend(frameon=False)
 fig.tight_layout(); fig.savefig("outputs/figures/weibull_by_lot.png")
 # 2 SPC chart q2
 fig,ax=plt.subplots(figsize=(7,3.2)); s=spc[spc.metric=="q2"]
@@ -21,7 +21,7 @@ for k,ls in [("UCL","--"),("LCL","--"),("CL","-")]: ax.plot(s.seq,s[k],c="#c4453
 ax.plot(s.seq,s.ewma_LCL,c="#2a6f97",ls=":",lw=.8)
 al_=s[s.ewma_alarm==1]; ax.scatter(al_.seq,al_.ewma,c="#c44536",s=10,zorder=3,label="EWMA alarm")
 for lot,g in s.groupby("lot"): ax.axvline(g.seq.min()-.5,c="grey",lw=.5); ax.text(g.seq.min(),s.value.max(),lot,fontsize=7)
-ax.set_ylabel("Initial discharge capacity (Ah)"); ax.set_xlabel("Cell (ordered by lot)"); ax.set_title("SPC: Phase I limits from first lot, Phase II monitoring"); ax.legend(frameon=False,fontsize=7,loc="lower left")
+ax.set_ylabel("Initial discharge capacity (Ah)"); ax.set_xlabel("Cell (ordered by test batch)"); ax.set_title("SPC: Phase I limits from first test batch, Phase II monitoring"); ax.legend(frameon=False,fontsize=7,loc="lower left")
 fig.tight_layout(); fig.savefig("outputs/figures/spc_initial_capacity.png")
 # 3 DOE interaction: cycle life vs Q1 by C1 band
 fig,ax=plt.subplots(figsize=(6,4)); d["C1_band"]=pd.cut(d.C1,[0,4.5,5.5,9],labels=["C1 ≤ 4.5C","4.5–5.5C","> 5.5C"])

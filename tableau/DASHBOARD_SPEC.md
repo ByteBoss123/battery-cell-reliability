@@ -1,16 +1,16 @@
 # Tableau dashboard build spec — Battery Cell Reliability & Field Failure Monitoring
 
-Connect Tableau Desktop / Tableau Public to the CSVs in this folder (Text file connector). One data source per file; no joins needed.
+Connect Tableau Desktop / Tableau Public to the CSVs in this folder (Text file connector). One data source per file; no joins needed. Column `lot` = test batch date (rename its alias to **Test batch** in Tableau).
 
-## Sheet 1 — Weibull life by lot  (`cells.csv`, `weibull_by_lot.csv`)
-- Calculated fields: `ln_life = LN([cycle_life])`; median-rank `F = (INDEX()-0.3)/(SIZE()+0.4)` computed along cells sorted by cycle_life, partitioned by lot; `weibull_y = LN(-LN(1-[F]))`
+## Sheet 1 — Weibull life by test batch  (`cells.csv`, `weibull_by_lot.csv`)
+- Calculated fields: `ln_life = LN([cycle_life])`; median-rank `F = (INDEX()-0.3)/(SIZE()+0.4)` computed along cells sorted by cycle_life, partitioned by `lot`; `weibull_y = LN(-LN(1-[F]))`
 - Columns `ln_life`, Rows `weibull_y`, Color `lot`. Add a reference line at y = LN(-LN(0.9)) labelled B10.
 - Tooltip: barcode, policy, cycle_life.
 
 ## Sheet 2 — SPC: initial capacity  (`spc_cells.csv`, filter `metric = "q2"`)
 - Columns `seq`, Rows dual axis: `value` (circle) and `ewma` (line); synchronize axes.
 - Reference lines from fields `UCL`, `CL`, `LCL` (average per pane), `ewma_UCL`, `ewma_LCL`.
-- Color `ewma_alarm` (1 = red). Detail `lot`; add `lot` as a filter and as a vertical reference band per lot.
+- Color `ewma_alarm` (1 = red). Detail `lot`; add `lot` as a filter and as a vertical reference band per test batch.
 
 ## Sheet 3 — DOE interaction  (`cells.csv`)
 - Columns `Q1`, Rows `cycle_life` (log axis), Color = bin of `C1` (≤4.5, 4.5–5.5, >5.5), trend lines per color (exponential/log model).
