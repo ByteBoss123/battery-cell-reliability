@@ -66,12 +66,11 @@ def events(stg: pd.DataFrame):
 
 def produce(stg: pd.DataFrame, bootstrap: str | None = None) -> int:
     from kafka import KafkaProducer
-    p = KafkaProducer(bootstrap_servers=bootstrap or os.environ["KAFKA_BOOTSTRAP"], acks="all",
-                      key_serializer=str.encode, value_serializer=lambda v: json.dumps(v).encode())
+    p = KafkaProducer(bootstrap_servers=bootstrap or os.environ["KAFKA_BOOTSTRAP"], acks="all")
     n = 0
     for r in events(stg).itertuples(index=False):
-        p.send(TOPIC_IN, key=r.model, value={"odi": int(r.odi), "my": int(r.my), "model": r.model,
-                                              "month": str(r.month.date()), "battery": int(r.comp_batt)})
+        p.send(TOPIC_IN, key=r.model.encode(), value=json.dumps({"odi": int(r.odi), "my": int(r.my), "model": r.model,
+                                                                  "month": str(r.month.date()), "battery": int(r.comp_batt)}).encode())
         n += 1
     p.flush()
     return n
@@ -81,20 +80,20 @@ def consume(params: dict, end: pd.Timestamp, expected: int, bootstrap: str | Non
     from kafka import KafkaConsumer, KafkaProducer
     bs = bootstrap or os.environ["KAFKA_BOOTSTRAP"]
     c = KafkaConsumer(TOPIC_IN, bootstrap_servers=bs, auto_offset_reset="earliest", enable_auto_commit=False,
-                      group_id="cellrel-pchart", value_deserializer=lambda b: json.loads(b), consumer_timeout_ms=timeout_s * 1000)
+                      group_id="cellrel-pchart", consumer_timeout_ms=timeout_s * 1000)
     chart = StreamingPChart(params["baseline_months"], params["min_baseline_months"], params["sigma_k"],
                             params["min_complaints"], params["min_battery"])
     seen = 0
     for msg in c:
-        v = msg.value
+        v = json.loads(msg.value)
         chart.process(v["model"], pd.Timestamp(v["month"]), v["battery"])
         seen += 1
         if seen == expected:
             break
     c.close()
     chart.flush(end)
-    out = KafkaProducer(bootstrap_servers=bs, value_serializer=lambda v: json.dumps(v).encode())
+    out = KafkaProducer(bootstrap_servers=bs)
     for a in chart.alerts:
-        out.send(TOPIC_OUT, a)
+        out.send(TOPIC_OUT, key=a["model"].encode(), value=json.dumps(a).encode())
     out.flush()
     return chart.alerts

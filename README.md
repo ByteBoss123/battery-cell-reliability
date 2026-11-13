@@ -9,6 +9,7 @@ A reproducible reliability pipeline for battery cells and EV field data. It answ
 | What failure rate should we expect in an affected population? | Exact right-censored Weibull MLE on 57,414 recalled vehicles (2017–19 Chevrolet Bolt), fit only on data from before the recall | β = 1.22 (95% CI 0.86–1.71); **1.6 battery complaints per 1,000 vehicles by 8 years** in service (CI 1.15–4.58), ≈ 92 vehicles, without the remedy |
 | Did the corrective action work? | Two independent checks: model-expected vs. observed failures, and a Poisson difference-in-differences test against a Nissan Leaf control | Observed / expected = **0.33** (exact Poisson CI 0.15–0.63); Leaf-controlled rate ratio 0.33 (p = 0.07). Both point to about a two-thirds reduction |
 | Can bad cells be caught from early cycling? | First-100-cycle features; early-failure classifier; split-conformal intervals; robustness over 20 cross-validation fold assignments | Cells failing before 550 cycles: **recall 0.86–0.90, precision 0.76–0.82, AUC 0.90–0.91** across all 20 fold splits |
+| Do cells charged beyond the datasheet spec fail sooner? | Compare each test policy's peak charge rate with the A123 APR18650M1A datasheet's recommended fast charge (5 A ≈ 4.55C); Weibull AFT adjusted for test batch | Yes. 114 of 124 cells were charged above spec; they reach **0.48× the life** of within-spec cells (95% CI 0.42–0.56). Only 10 cells were within spec |
 | Can field complaints warn of a recall in advance? | Pre-registered, fleet-size-normalized p-chart scored against all 16 traction-battery recalls | **No.** 1 of 7 first-in-family recalls had an alert, and that hit looks coincidental. Early warning needs vehicle telemetry |
 
 ## Data
@@ -25,6 +26,10 @@ A reproducible reliability pipeline for battery cells and EV field data. It answ
 
 ```
 data/raw/*.csv ──► ingest ──► DuckDB warehouse ───────────────────────────► analyses ──► outputs/
+                                   │                                                   (batch)
+                                   ├──► MySQL 8      relational serving layer (typed DDL, PK + indexes, parity-checked)
+                                   ├──► MongoDB 7    document store for complaints/recalls (upserts, aggregation parity)
+                                   └──► Kafka 3.8    complaints replayed as events → streaming p-chart → battery.alerts
                  (NhtsaClient,  raw_*       (as delivered, all text)        reliability    metrics.json
                   Severson     stg_*        (typed, decoded, validated)     spc            run_manifest.json
                   loader)      quarantine_* (rows failing validation)       doe            tables/*.csv  (Tableau)
@@ -42,6 +47,9 @@ data/raw/*.csv ──► ingest ──► DuckDB warehouse ───────
 | `doe.py` | Quadratic response surface with batch blocking, pure-error lack-of-fit, optimum restricted to the tested region |
 | `causal.py` | Poisson DiD with HC0-robust errors; observed/expected with exact Garwood intervals |
 | `screening.py` | Early-life regression, split-conformal intervals, early-failure classifier, cross-validation fold robustness |
+| `spec.py` | Deviation from cell specification: datasheet values in `config/params.yaml`, batch-adjusted Weibull AFT on above-spec charging |
+| `sinks/mysql_sink.py`, `sinks/mongo_sink.py` | Publish the warehouse to MySQL (relational) and MongoDB (documents). Idempotent reloads, then the same aggregates are recomputed in each engine and must match DuckDB exactly |
+| `streaming/kafka_stream.py` | Producer replays complaints keyed by nameplate (per-key ordering); a stateful consumer closes months (including empty ones) and applies the same p-chart rule. It must reproduce the batch alerts exactly |
 | `pipeline.py`, `cli.py` | Orchestration; writes metrics, tables, figures and a run manifest (package version, SHA-256 of the config and every raw file, data-quality results) |
 
 **Pre-registration:** every threshold and window is fixed in `config/params.yaml`, including alert rules, the DiD windows and the early-failure cutoff. The run manifest records the config hash, so a changed threshold is visible.
@@ -52,11 +60,13 @@ data/raw/*.csv ──► ingest ──► DuckDB warehouse ───────
 make install        # pip install -e ".[dev]"
 make all            # lint -> cellrel run -> cellrel figures -> pytest
 make ingest         # optional: refresh the NHTSA snapshot from the live API (needs internet)
+make integration    # MySQL / MongoDB / Kafka tests (set MYSQL_URL, MONGO_URI, KAFKA_BOOTSTRAP)
+cellrel publish-mysql | publish-mongo | stream-kafka
 ```
 
 `cellrel run` takes about 12 seconds on a laptop.
 
-## Tests (21, all passing)
+## Tests (27, all passing)
 
 - **Estimators recover known truth from simulated data before touching real data:**
   - Weibull MLE at shapes 0.8, 2.0 and 6.5.
@@ -67,7 +77,8 @@ make ingest         # optional: refresh the NHTSA snapshot from the live API (ne
   - Western Electric rules fire on constructed patterns.
 - **Ingestion client** tested against a fake transport: retry on 429, "400 = no data", name-variant discovery and deduplication.
 - **Golden regression:** a full pipeline run must reproduce every published number in this README (`tests/golden_v1.json`). It caught a real issue during the refactor, described below.
-- CI: GitHub Actions runs lint and the full test suite on every push (passing).
+- **Integration (3 tests, live services):** CI starts MySQL 8.0, MongoDB 7 and Apache Kafka 3.8 as service containers. It publishes 11,051 complaints to each, checks parity with the warehouse and checks idempotent reruns. It also streams every complaint through Kafka and asserts the streaming alerts equal the batch alerts. In CI, a missing service fails the build instead of skipping.
+- CI: GitHub Actions runs lint, 24 unit/pipeline tests and the 3 integration tests on every push (passing). MySQL was also verified locally (MySQL 8.0.46).
 
 ## Results
 
