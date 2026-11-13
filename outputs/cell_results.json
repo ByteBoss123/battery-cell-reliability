@@ -1,0 +1,258 @@
+{
+ "weibull": [
+  {
+   "lot": "ALL",
+   "n": 124,
+   "shape_beta": 2.232,
+   "scale_eta": 907.655,
+   "B10": 331.242,
+   "B10_lo": 293.901,
+   "B10_hi": 376.675,
+   "KS_p": 0.008
+  },
+  {
+   "lot": "2017-05-12",
+   "n": 41,
+   "shape_beta": 2.395,
+   "scale_eta": 1040.732,
+   "B10": 406.711,
+   "B10_lo": 365.077,
+   "B10_hi": 500.168,
+   "KS_p": 0.033
+  },
+  {
+   "lot": "2017-06-30",
+   "n": 43,
+   "shape_beta": 6.683,
+   "scale_eta": 501.825,
+   "B10": 358.361,
+   "B10_lo": 321.967,
+   "B10_hi": 430.469,
+   "KS_p": 0.007
+  },
+  {
+   "lot": "2018-04-12",
+   "n": 40,
+   "shape_beta": 3.349,
+   "scale_eta": 1144.688,
+   "B10": 584.56,
+   "B10_lo": 533.491,
+   "B10_hi": 678.303,
+   "KS_p": 0.062
+  }
+ ],
+ "aft": [
+  {
+   "covariate": "C1",
+   "exp(coef)": 0.8554,
+   "exp(coef) lower 95%": 0.8102,
+   "exp(coef) upper 95%": 0.9032,
+   "p": 0.0
+  },
+  {
+   "covariate": "C2",
+   "exp(coef)": 0.8764,
+   "exp(coef) lower 95%": 0.8055,
+   "exp(coef) upper 95%": 0.9534,
+   "p": 0.0021
+  },
+  {
+   "covariate": "Q1",
+   "exp(coef)": 1.004,
+   "exp(coef) lower 95%": 1.0018,
+   "exp(coef) upper 95%": 1.0063,
+   "p": 0.0004
+  },
+  {
+   "covariate": "lot_2017_06_30",
+   "exp(coef)": 0.5508,
+   "exp(coef) lower 95%": 0.4847,
+   "exp(coef) upper 95%": 0.6259,
+   "p": 0.0
+  },
+  {
+   "covariate": "lot_2018_04_12",
+   "exp(coef)": 1.2033,
+   "exp(coef) lower 95%": 1.0775,
+   "exp(coef) upper 95%": 1.3437,
+   "p": 0.001
+  },
+  {
+   "covariate": "Intercept",
+   "exp(coef)": 3088.1896,
+   "exp(coef) lower 95%": 1698.2834,
+   "exp(coef) upper 95%": 5615.6205,
+   "p": 0.0
+  }
+ ],
+ "prediction": [
+  {
+   "set": "train",
+   "n": 41,
+   "RMSE": 87.5,
+   "MAPE": 11.9
+  },
+  {
+   "set": "test1",
+   "n": 43,
+   "RMSE": 124.9,
+   "MAPE": 13.3
+  },
+  {
+   "set": "test2 (new lot)",
+   "n": 40,
+   "RMSE": 229.2,
+   "MAPE": 12.7
+  },
+  {
+   "set": "test1 (variance-only)",
+   "n": 43,
+   "RMSE": 137.9,
+   "MAPE": 14.7
+  },
+  {
+   "set": "test2 (new lot) (variance-only)",
+   "n": 40,
+   "RMSE": 195.9,
+   "MAPE": 11.4
+  }
+ ],
+ "screen": [
+  {
+   "set": "test1",
+   "actual_early": 1,
+   "flagged": 2,
+   "true_flags": 1
+  },
+  {
+   "set": "test2",
+   "actual_early": 0,
+   "flagged": 0,
+   "true_flags": 0
+  }
+ ],
+ "spc": [
+  {
+   "metric": "dq_resid",
+   "lot": "2017-05-12",
+   "n": 41,
+   "rule1": 0,
+   "rule2": 0,
+   "rule4": 0,
+   "ewma": 0,
+   "mean": 0.0495,
+   "ewma_upper_dq": 0
+  },
+  {
+   "metric": "dq_resid",
+   "lot": "2017-06-30",
+   "n": 43,
+   "rule1": 0,
+   "rule2": 0,
+   "rule4": 5,
+   "ewma": 0,
+   "mean": 0.2566,
+   "ewma_upper_dq": 0
+  },
+  {
+   "metric": "dq_resid",
+   "lot": "2018-04-12",
+   "n": 40,
+   "rule1": 0,
+   "rule2": 0,
+   "rule4": 21,
+   "ewma": 11,
+   "mean": -0.3266,
+   "ewma_upper_dq": 0
+  },
+  {
+   "metric": "q2",
+   "lot": "2017-05-12",
+   "n": 41,
+   "rule1": 1,
+   "rule2": 0,
+   "rule4": 2,
+   "ewma": 0,
+   "mean": 1.0624,
+   "ewma_upper_dq": 0
+  },
+  {
+   "metric": "q2",
+   "lot": "2017-06-30",
+   "n": 43,
+   "rule1": 2,
+   "rule2": 0,
+   "rule4": 3,
+   "ewma": 16,
+   "mean": 1.0554,
+   "ewma_upper_dq": 0
+  },
+  {
+   "metric": "q2",
+   "lot": "2018-04-12",
+   "n": 40,
+   "rule1": 6,
+   "rule2": 14,
+   "rule4": 33,
+   "ewma": 40,
+   "mean": 1.0482,
+   "ewma_upper_dq": 0
+  }
+ ],
+ "spc_life": {
+  "flagged_n": 65,
+  "flagged_median": 825.0,
+  "unflagged_median": 651.0,
+  "mannwhitney_p": 0.1366209811728878
+ },
+ "doe": {
+  "r2_main": 0.6706339191869204,
+  "r2_full": 0.8296934680248392,
+  "adj_r2_full": 0.8129669336344216,
+  "n_policies": 68,
+  "replicated_policies": 27,
+  "lack_of_fit_F": 1.067125733843353,
+  "lack_of_fit_p": 0.40439508972190064,
+  "params": {
+   "Intercept": 5.87064,
+   "C(lot)[T.2017-06-30]": -0.18618,
+   "C(lot)[T.2018-04-12]": 0.10783,
+   "C1": -0.38715,
+   "Q1": -0.00078,
+   "C2": -0.68002,
+   "C1:Q1": -0.00226,
+   "C1:C2": 0.05785,
+   "Q1:C2": 0.00242,
+   "I(C1 ** 2)": 0.01288,
+   "I(C2 ** 2)": 0.02077,
+   "I(Q1 ** 2)": 1e-05
+  },
+  "pvalues": {
+   "Intercept": 0.0,
+   "C(lot)[T.2017-06-30]": 0.0,
+   "C(lot)[T.2018-04-12]": 0.0,
+   "C1": 0.0439,
+   "Q1": 0.8851,
+   "C2": 0.0106,
+   "C1:Q1": 0.0,
+   "C1:C2": 0.0198,
+   "Q1:C2": 0.013,
+   "I(C1 ** 2)": 0.1408,
+   "I(C2 ** 2)": 0.2263,
+   "I(Q1 ** 2)": 0.5234
+  },
+  "best_10min": {
+   "C1": 4.9,
+   "Q1": 75,
+   "C2": 3.0,
+   "t80_min": 10.18,
+   "lot": "2017-05-12",
+   "pred_life": 1027.93
+  },
+  "observed_best_10min": {
+   "5.4C(70%)-3C": 1015.5,
+   "5.3C(54%)-4C": 1074.375,
+   "5C(67%)-4C": 1115.6666666666667
+  }
+ }
+}

@@ -1,0 +1,6 @@
+set,n,RMSE,MAPE
+train,41,87.5,11.9
+test1,43,124.9,13.3
+test2 (new lot),40,229.2,12.7
+test1 (variance-only),43,137.9,14.7
+test2 (new lot) (variance-only),40,195.9,11.4

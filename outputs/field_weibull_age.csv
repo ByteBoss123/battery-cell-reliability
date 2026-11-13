@@ -1,0 +1,6 @@
+model,n,shape_beta,beta_lo,beta_hi,scale_months,median_age_mo
+Tesla Model 3,41,1.77,1.51,2.15,23.8,17.5
+Chevrolet Bolt EV/EUV,122,2.34,2.04,2.81,27.7,23.5
+VW ID.4,50,2.23,1.82,2.84,28.4,26.5
+Nissan Leaf,28,2.72,1.7,5.83,40.0,42.0
+Tesla Model Y,25,1.81,1.46,2.47,25.2,19.5
