@@ -42,8 +42,23 @@ Incoming capacity shifted down 1.3%, but capacity isn't the failure mechanism. D
 - Fleet B10: 331 cycles. Per-batch B10: 407 / 358 / 585 cycles.
 - Batch effect adjusted for charging policy: 0.55× and 1.20×.
 - DOE: R² 0.83, lack-of-fit p 0.40, C1×Q1 p < 0.001.
-- Early-failure screen: recall 0.86, precision 0.78, AUC 0.91.
+- Early-failure screen: recall 0.86, precision 0.78, AUC 0.91. Holds across 20 CV fold splits (recall 0.86–0.90, precision 0.76–0.82, AUC 0.90–0.91).
+- Lifetime RMSE: median 93.6 cycles on Test 1 across 20 fold splits (87.0 was the best split, not the typical one). No gain over the variance baseline on the unseen batch.
 - Conformal coverage on the unseen batch: 87.5% (target 90%).
 - Bolt fleet: 109,828 units, 1.66 battery complaints per 1,000 vehicles.
 - Population model: β 1.22, 1.6 per 1,000 by 8 years, O/E 0.33.
 - Early warning: 1 of 7 first-in-family recalls caught (negative result).
+
+## Engineering questions
+
+**"How do you know your Weibull code is right?"**
+Before running it on real data, the tests check that it recovers known parameters from simulated data, including the rare-failure censored regime (39 failures among 60,000 units). It also agrees with SciPy to 1e-5. The solver finds the exact MLE by root-finding on the profile-likelihood equation, and censored units are weighted rows, so 57,000 vehicles cost 3 rows.
+
+**"How do you stop bad data from reaching the model?"**
+The DuckDB warehouse goes raw → staging → marts with 11 critical checks (uniqueness, domains, parsable dates, referential integrity of recall units, cell count). A failed critical check stops the run. Bad incident dates (10 of 11,051) are quarantined to their own table, not dropped. Every run writes a manifest with SHA-256 hashes of the config and raw files.
+
+**"How do you know a refactor didn't change your results?"**
+A golden regression test: the full pipeline must reproduce every published number. It caught that unshuffled CV folds depended on row order. That led to a 20-split robustness check, which showed one published number was the best case, so the README now reports the median.
+
+**"What would change at Tesla scale?"**
+Same layers, different engines. The NHTSA client becomes a streaming consumer of vehicle telemetry, DuckDB becomes the lakehouse, and the quality checks become data contracts enforced at ingestion. The Weibull and SPC code already runs on aggregated, weighted rows, so it scales with the number of cohorts, not the number of vehicles.

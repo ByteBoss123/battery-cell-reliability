@@ -1,0 +1,42 @@
+{
+ "weibull_B10": {
+  "ALL": 331.242,
+  "2017-05-12": 406.711,
+  "2017-06-30": 358.361,
+  "2018-04-12": 584.56
+ },
+ "weibull_shape": {
+  "ALL": 2.232,
+  "2017-05-12": 2.395,
+  "2017-06-30": 6.683,
+  "2018-04-12": 3.349
+ },
+ "aft_lot_2017_06_30": 0.5508,
+ "aft_lot_2018_04_12": 1.2033,
+ "doe_r2": 0.8296934680248392,
+ "doe_lof_p": 0.40439508972190064,
+ "spc_q2_ewma_alarms_2018": 40,
+ "n_complaints": 11051,
+ "bolt_per_1000": 1.66,
+ "did_primary_rr": 0.333,
+ "did_primary_p": 0.06898631261996822,
+ "pop_beta": 1.22,
+ "pop_rate_96": 1.59,
+ "pop_expected": 27.1,
+ "pop_observed": 9,
+ "pop_oe": 0.33,
+ "screen_rmse_test1": 87.0,
+ "screen_rmse_test2": 191.4,
+ "conformal_coverage": 0.875,
+ "clf_test1": {
+  "n": 43,
+  "actual_early": 21,
+  "flagged": 23,
+  "accuracy": 0.814,
+  "precision": 0.783,
+  "recall": 0.857,
+  "roc_auc": 0.909
+ },
+ "pchart_first_in_family": "1/7",
+ "pchart_alert_months": 5
+}

@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cellrel"
+version = "1.0.0"
+description = "Battery cell reliability and EV field-failure analytics: Weibull life data, SPC, DOE, censored population models, corrective-action verification"
+requires-python = ">=3.10"
+dependencies = ["numpy", "pandas", "scipy", "statsmodels", "scikit-learn", "lifelines", "duckdb>=1.0", "pyyaml", "requests", "matplotlib"]
+
+[project.optional-dependencies]
+dev = ["pytest", "ruff"]
+
+[project.scripts]
+cellrel = "cellrel.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 120
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+ignore = ["E501"]

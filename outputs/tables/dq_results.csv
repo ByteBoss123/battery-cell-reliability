@@ -1,0 +1,13 @@
+name,severity,violations,passed
+complaints_unique_odi_my,critical,0,true
+complaints_flags_domain,critical,0,true
+complaints_model_known,critical,0,true
+complaints_filed_parsed,critical,0,true
+complaints_my_range,critical,0,true
+recalls_report_date_parsed,critical,0,true
+recall_units_positive,critical,0,true
+recall_units_campaigns_exist,critical,0,true
+cells_unique_barcode,critical,0,true
+cells_count_124,critical,0,true
+cells_positive_life,critical,0,true
+incident_dates_quarantined,warn,10,false

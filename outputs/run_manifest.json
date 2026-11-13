@@ -1,0 +1,88 @@
+{
+ "cellrel_version": "1.0.0",
+ "python": "3.13.18",
+ "started_utc": "2026-11-13T20:39:50.667665+00:00",
+ "finished_utc": "2026-11-13T20:40:00.689980+00:00",
+ "params_sha256": "bdd8c0c4920256bb237fc74a7626bd6a2f6eec73c581b64ac8a60c970bbe7556",
+ "raw_sha256": {
+  "SOURCE_COMMIT.txt": "5c0aedcafe435d7ab0535bff7c5105c3c8d5b584a5494beca7b0d5fafbe5e5ab",
+  "nhtsa_battery_recall_units.csv": "8f87fd9329920877cc0f7a517598edc2b796098581aeef9cce2b62fff1a15efc",
+  "nhtsa_complaints_compact.csv": "e406da11b02cccc88051dc3d39cd9094d7ba87c1f0271b8b7e89dd4de07ed3a3",
+  "nhtsa_recalls.csv": "73bd6f275661877a701de9eae22c429a53c9c7c29d6531b3f6f44d1c788d33fb",
+  "severson_et_al_SI_table9.csv": "34be34f86521c12daf0bbb962dca0bd3bd65089b7bc8bcea85f84480e6fd3cb3"
+ },
+ "data_quality": [
+  {
+   "name": "complaints_unique_odi_my",
+   "severity": "critical",
+   "violations": 0,
+   "passed": true
+  },
+  {
+   "name": "complaints_flags_domain",
+   "severity": "critical",
+   "violations": 0,
+   "passed": true
+  },
+  {
+   "name": "complaints_model_known",
+   "severity": "critical",
+   "violations": 0,
+   "passed": true
+  },
+  {
+   "name": "complaints_filed_parsed",
+   "severity": "critical",
+   "violations": 0,
+   "passed": true
+  },
+  {
+   "name": "complaints_my_range",
+   "severity": "critical",
+   "violations": 0,
+   "passed": true
+  },
+  {
+   "name": "recalls_report_date_parsed",
+   "severity": "critical",
+   "violations": 0,
+   "passed": true
+  },
+  {
+   "name": "recall_units_positive",
+   "severity": "critical",
+   "violations": 0,
+   "passed": true
+  },
+  {
+   "name": "recall_units_campaigns_exist",
+   "severity": "critical",
+   "violations": 0,
+   "passed": true
+  },
+  {
+   "name": "cells_unique_barcode",
+   "severity": "critical",
+   "violations": 0,
+   "passed": true
+  },
+  {
+   "name": "cells_count_124",
+   "severity": "critical",
+   "violations": 0,
+   "passed": true
+  },
+  {
+   "name": "cells_positive_life",
+   "severity": "critical",
+   "violations": 0,
+   "passed": true
+  },
+  {
+   "name": "incident_dates_quarantined",
+   "severity": "warn",
+   "violations": 10,
+   "passed": false
+  }
+ ]
+}

@@ -1,8 +1,8 @@
 # Tableau dashboard build spec — Battery Cell Reliability & Field Failure Monitoring
 
-Connect Tableau Desktop / Tableau Public to the CSVs in this folder (Text file connector). One data source per file; no joins needed. Column `lot` = test batch date (rename its alias to **Test batch** in Tableau).
+Connect Tableau Desktop / Tableau Public to the CSVs in `outputs/tables/` (written by `cellrel run`) (Text file connector). One data source per file; no joins needed. Column `lot` = test batch date (rename its alias to **Test batch** in Tableau).
 
-## Sheet 1 — Weibull life by test batch  (`cells.csv`, `weibull_by_lot.csv`)
+## Sheet 1 — Weibull life by test batch  (`cells.csv` (+ Weibull parameters from `outputs/metrics.json`))
 - Calculated fields: `ln_life = LN([cycle_life])`; median-rank `F = (INDEX()-0.3)/(SIZE()+0.4)` computed along cells sorted by cycle_life, partitioned by `lot`; `weibull_y = LN(-LN(1-[F]))`
 - Columns `ln_life`, Rows `weibull_y`, Color `lot`. Add a reference line at y = LN(-LN(0.9)) labelled B10.
 - Tooltip: barcode, policy, cycle_life.
@@ -15,14 +15,14 @@ Connect Tableau Desktop / Tableau Public to the CSVs in this folder (Text file c
 ## Sheet 3 — DOE interaction  (`cells.csv`)
 - Columns `Q1`, Rows `cycle_life` (log axis), Color = bin of `C1` (≤4.5, 4.5–5.5, >5.5), trend lines per color (exponential/log model).
 
-## Sheet 4 — Field battery-share p-chart (`pchart_alerts_monthly.csv`; v1 volume chart in `field_alerts_monthly.csv`)
-- Columns `month` (continuous month), Rows `share` (circle) + `ucl` and `p_bar` (lines, dual axis). Color `alert`. Filter `model`.
-- Add recall report dates as reference lines (from `affected_population.csv` / README table).
+## Sheet 4 — Field battery-share p-chart  (`pchart_monthly.csv`)
+- Columns `month` (continuous month), Rows `p` (circle) + `ucl` and `p_bar` (lines, dual axis). Color `alert`. Filter `model`.
+- Add recall report dates as reference lines (`metrics.json` → field.alerting_pchart.detail).
 
-## Sheet 5 — Corrective-action check  (`bolt_did_panel.csv`)
+## Sheet 5 — Corrective-action check  (`corrective_action_panel.csv`)
 - Columns `mo`, Rows `n` with 3-month moving average table calc, Color `bolt` (1 = Bolt MY2017-19, 0 = Leaf MY2011-19). Shade `period = "rollout"`.
 
-## Sheet 6 — Affected population  (`affected_population.csv`)
+## Sheet 6 — Affected population  (`metrics.json` → field.population_model)
 - Text table: campaign, model, model_years, recall_report, units_affected, batt_complaints_before_recall, batt_complaints_total.
 
 ## Dashboard

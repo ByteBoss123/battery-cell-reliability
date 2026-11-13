@@ -1,0 +1,756 @@
+{
+ "cells": {
+  "weibull_by_batch": [
+   {
+    "lot": "ALL",
+    "n": 124,
+    "shape_beta": 2.2324745748641273,
+    "scale_eta": 907.6549725042968,
+    "B10": 331.2421099946654,
+    "B10_lo": 293.9012663336412,
+    "B10_hi": 376.67507006924444,
+    "KS_p": 0.008436885427740464
+   },
+   {
+    "lot": "2017-05-12",
+    "n": 41,
+    "shape_beta": 2.3950841225045414,
+    "scale_eta": 1040.7324061889276,
+    "B10": 406.710816303584,
+    "B10_lo": 365.07658799532163,
+    "B10_hi": 500.16804733712996,
+    "KS_p": 0.03250546537700727
+   },
+   {
+    "lot": "2017-06-30",
+    "n": 43,
+    "shape_beta": 6.683376133044322,
+    "scale_eta": 501.8253464374641,
+    "B10": 358.3610451353513,
+    "B10_lo": 321.9666886389083,
+    "B10_hi": 430.4693957283009,
+    "KS_p": 0.006937583341572351
+   },
+   {
+    "lot": "2018-04-12",
+    "n": 40,
+    "shape_beta": 3.3486210031988946,
+    "scale_eta": 1144.688159967068,
+    "B10": 584.5600156955738,
+    "B10_lo": 533.4907001986459,
+    "B10_hi": 678.3032127803821,
+    "KS_p": 0.062414873436871576
+   }
+  ],
+  "aft_policy_adjusted": {
+   "C1": {
+    "ratio": 0.8554314382218435,
+    "ci95": [
+     0.8102247939353872,
+     0.9031603957020444
+    ],
+    "p": 1.7321257464544195e-08
+   },
+   "C2": {
+    "ratio": 0.876351982298178,
+    "ci95": [
+     0.8055385365935104,
+     0.9533905108074172
+    ],
+    "p": 0.002138684836018547
+   },
+   "Q1": {
+    "ratio": 1.0040177542015118,
+    "ci95": [
+     1.001790147030954,
+     1.0062503147385218
+    ],
+    "p": 0.0004028816187085625
+   },
+   "lot_2017_06_30": {
+    "ratio": 0.5507942928415501,
+    "ci95": [
+     0.4847016884860217,
+     0.6258991050235888
+    ],
+    "p": 5.995235865679242e-20
+   },
+   "lot_2018_04_12": {
+    "ratio": 1.2032796437390874,
+    "ci95": [
+     1.0775390932104196,
+     1.343693152443357
+    ],
+    "p": 0.0010157594812931496
+   }
+  },
+  "spc": {
+   "q2": {
+    "2017-05-12": {
+     "rule1": 1,
+     "rule2": 0,
+     "rule4": 2,
+     "ewma_alarm": 0,
+     "ewma_upper": 0,
+     "ewma_lower": 0
+    },
+    "2017-06-30": {
+     "rule1": 2,
+     "rule2": 0,
+     "rule4": 3,
+     "ewma_alarm": 16,
+     "ewma_upper": 0,
+     "ewma_lower": 16
+    },
+    "2018-04-12": {
+     "rule1": 6,
+     "rule2": 14,
+     "rule4": 33,
+     "ewma_alarm": 40,
+     "ewma_upper": 0,
+     "ewma_lower": 40
+    }
+   },
+   "dq_resid": {
+    "2017-05-12": {
+     "rule1": 0,
+     "rule2": 0,
+     "rule4": 0,
+     "ewma_alarm": 0,
+     "ewma_upper": 0,
+     "ewma_lower": 0
+    },
+    "2017-06-30": {
+     "rule1": 0,
+     "rule2": 0,
+     "rule4": 5,
+     "ewma_alarm": 0,
+     "ewma_upper": 0,
+     "ewma_lower": 0
+    },
+    "2018-04-12": {
+     "rule1": 0,
+     "rule2": 0,
+     "rule4": 21,
+     "ewma_alarm": 11,
+     "ewma_upper": 0,
+     "ewma_lower": 11
+    }
+   },
+   "flagged_vs_life": {
+    "flagged": 65,
+    "median_flagged": 825.0,
+    "median_unflagged": 651.0,
+    "mannwhitney_p": 0.1366209811728878
+   }
+  },
+  "doe": {
+   "r2": 0.8296934680248393,
+   "adj_r2": 0.8129669336344217,
+   "lack_of_fit": {
+    "F": 1.0671257338433522,
+    "p": 0.4043950897219004,
+    "df_lof": 56,
+    "df_pe": 56,
+    "replicated_policies": 27
+   },
+   "pvalues": {
+    "Intercept": 1.0950444482905643e-07,
+    "C(lot)[T.2017-06-30]": 4.7658392128014965e-11,
+    "C(lot)[T.2018-04-12]": 4.917350774237038e-05,
+    "C1": 0.04392071757564964,
+    "Q1": 0.8850969641690931,
+    "C2": 0.010552604815415936,
+    "C1:Q1": 4.267235099248083e-06,
+    "C1:C2": 0.019768960179381238,
+    "Q1:C2": 0.012989627808173632,
+    "I(C1 ** 2)": 0.14080925299434216,
+    "I(C2 ** 2)": 0.22631547440169275,
+    "I(Q1 ** 2)": 0.5234274622954425
+   },
+   "anova": [
+    {
+     "term": "C(lot)",
+     "sum_sq": 1.51163,
+     "df": 2.0,
+     "F": 113.40484,
+     "PR(>F)": 0.0
+    },
+    {
+     "term": "C1",
+     "sum_sq": 0.02505,
+     "df": 1.0,
+     "F": 3.75827,
+     "PR(>F)": 0.05506
+    },
+    {
+     "term": "Q1",
+     "sum_sq": 0.00046,
+     "df": 1.0,
+     "F": 0.06865,
+     "PR(>F)": 0.79379
+    },
+    {
+     "term": "C2",
+     "sum_sq": 0.00808,
+     "df": 1.0,
+     "F": 1.21282,
+     "PR(>F)": 0.27314
+    },
+    {
+     "term": "C1:Q1",
+     "sum_sq": 0.15582,
+     "df": 1.0,
+     "F": 23.38032,
+     "PR(>F)": 0.0
+    },
+    {
+     "term": "C1:C2",
+     "sum_sq": 0.03727,
+     "df": 1.0,
+     "F": 5.59148,
+     "PR(>F)": 0.01977
+    },
+    {
+     "term": "Q1:C2",
+     "sum_sq": 0.04247,
+     "df": 1.0,
+     "F": 6.37271,
+     "PR(>F)": 0.01299
+    },
+    {
+     "term": "I(C1 ** 2)",
+     "sum_sq": 0.01466,
+     "df": 1.0,
+     "F": 2.20011,
+     "PR(>F)": 0.14081
+    },
+    {
+     "term": "I(C2 ** 2)",
+     "sum_sq": 0.00986,
+     "df": 1.0,
+     "F": 1.48011,
+     "PR(>F)": 0.22632
+    },
+    {
+     "term": "I(Q1 ** 2)",
+     "sum_sq": 0.00273,
+     "df": 1.0,
+     "F": 0.4097,
+     "PR(>F)": 0.52343
+    },
+    {
+     "term": "Residual",
+     "sum_sq": 0.74645,
+     "df": 112.0,
+     "F": NaN,
+     "PR(>F)": NaN
+    }
+   ],
+   "best_policy_near_tested": {
+    "C1": 4.9,
+    "Q1": 75.0,
+    "C2": 3.0,
+    "t80_min": 10.18,
+    "pred_life": 1027.93
+   },
+   "best_observed_10min": {
+    "5.4C(70%)-3C": 1015.5,
+    "5.3C(54%)-4C": 1074.4,
+    "5C(67%)-4C": 1115.7
+   }
+  },
+  "screening": {
+   "regression": {
+    "test1": {
+     "RMSE": 87.0,
+     "MAPE": 13.0
+    },
+    "test2_unseen_batch": {
+     "RMSE": 191.4,
+     "MAPE": 9.6
+    }
+   },
+   "variance_baseline": {
+    "test1": {
+     "RMSE": 137.9,
+     "MAPE": 14.7
+    },
+    "test2": {
+     "RMSE": 195.9,
+     "MAPE": 11.4
+    }
+   },
+   "conformal": {
+    "level": 0.9,
+    "coverage": 0.875,
+    "median_width_cycles": 435.0
+   },
+   "early_failure": {
+    "test1": {
+     "n": 43,
+     "actual_early": 21,
+     "flagged": 23,
+     "accuracy": 0.814,
+     "precision": 0.783,
+     "recall": 0.857,
+     "roc_auc": 0.909
+    },
+    "test2_unseen_batch": {
+     "n": 40,
+     "actual_early": 1,
+     "flagged": 5,
+     "accuracy": 0.9,
+     "precision": 0.2,
+     "recall": 1.0,
+     "roc_auc": 1.0
+    }
+   },
+   "cv_fold_robustness": {
+    "n_fold_seeds": 20,
+    "rmse_test1": {
+     "median": 93.6,
+     "min": 86.9,
+     "max": 131.0
+    },
+    "rmse_test2": {
+     "median": 195.6,
+     "min": 190.0,
+     "max": 203.6
+    },
+    "recall_test1": {
+     "median": 0.857,
+     "min": 0.857,
+     "max": 0.905
+    },
+    "precision_test1": {
+     "median": 0.792,
+     "min": 0.76,
+     "max": 0.818
+    },
+    "auc_test1": {
+     "median": 0.909,
+     "min": 0.903,
+     "max": 0.913
+    }
+   }
+  }
+ },
+ "field": {
+  "n_complaints": 11051,
+  "quarantined_incident_dates": 10,
+  "nameplates": [
+   {
+    "model_name": "Tesla Model 3",
+    "complaints": 4025,
+    "batt": 66.0,
+    "batt_broad": 193.0,
+    "batt_fire": 4.0,
+    "my_min": 2017,
+    "my_max": 2023,
+    "batt_share_pct": 1.6
+   },
+   {
+    "model_name": "Tesla Model Y",
+    "complaints": 3466,
+    "batt": 34.0,
+    "batt_broad": 169.0,
+    "batt_fire": 1.0,
+    "my_min": 2020,
+    "my_max": 2023,
+    "batt_share_pct": 1.0
+   },
+   {
+    "model_name": "Nissan Leaf",
+    "complaints": 1105,
+    "batt": 141.0,
+    "batt_broad": 377.0,
+    "batt_fire": 1.0,
+    "my_min": 2011,
+    "my_max": 2023,
+    "batt_share_pct": 12.8
+   },
+   {
+    "model_name": "Chevrolet Bolt EV/EUV",
+    "complaints": 1089,
+    "batt": 200.0,
+    "batt_broad": 384.0,
+    "batt_fire": 4.0,
+    "my_min": 2017,
+    "my_max": 2023,
+    "batt_share_pct": 18.4
+   },
+   {
+    "model_name": "VW ID.4",
+    "complaints": 949,
+    "batt": 56.0,
+    "batt_broad": 155.0,
+    "batt_fire": 2.0,
+    "my_min": 2021,
+    "my_max": 2023,
+    "batt_share_pct": 5.9
+   },
+   {
+    "model_name": "Hyundai Kona Electric",
+    "complaints": 417,
+    "batt": 23.0,
+    "batt_broad": 80.0,
+    "batt_fire": 0.0,
+    "my_min": 2019,
+    "my_max": 2023,
+    "batt_share_pct": 5.5
+   }
+  ],
+  "age_weibull": [
+   {
+    "model": "Tesla Model 3",
+    "n": 41,
+    "shape_beta": 1.7716418536647558,
+    "beta_ci95": [
+     1.5134111497781024,
+     2.150202917055765
+    ],
+    "scale_months": 23.803611152061006,
+    "median_age_months": 17.5
+   },
+   {
+    "model": "Chevrolet Bolt EV/EUV",
+    "n": 122,
+    "shape_beta": 2.3388007753966575,
+    "beta_ci95": [
+     2.044790270310678,
+     2.8148670223107644
+    ],
+    "scale_months": 27.68373494365778,
+    "median_age_months": 23.5
+   },
+   {
+    "model": "VW ID.4",
+    "n": 50,
+    "shape_beta": 2.233445973714455,
+    "beta_ci95": [
+     1.8181035743149634,
+     2.839169484781809
+    ],
+    "scale_months": 28.40405006731891,
+    "median_age_months": 26.5
+   },
+   {
+    "model": "Nissan Leaf",
+    "n": 28,
+    "shape_beta": 2.721948992331214,
+    "beta_ci95": [
+     1.6999691190837567,
+     5.833837570117217
+    ],
+    "scale_months": 40.014031707130734,
+    "median_age_months": 42.0
+   },
+   {
+    "model": "Tesla Model Y",
+    "n": 25,
+    "shape_beta": 1.8109859734115787,
+    "beta_ci95": [
+     1.4591116043542303,
+     2.4702929928434973
+    ],
+    "scale_months": 25.180804479819596,
+    "median_age_months": 19.5
+   }
+  ],
+  "bolt_fleet": {
+   "units": 109828,
+   "batt_complaints": 182,
+   "per_1000": 1.6571366136140147
+  },
+  "corrective_action_did": {
+   "comp_batt|primary": {
+    "rate_ratio": 0.333333333333331,
+    "ci95": [
+     0.10201032495133816,
+     1.0892143629981839
+    ],
+    "p": 0.06898631261996822,
+    "treated_pre": 0.8181818181818182,
+    "treated_post": 0.36,
+    "control_pre": 0.36363636363636365,
+    "control_post": 0.48
+   },
+   "comp_batt|sensitivity": {
+    "rate_ratio": 0.10840108401074769,
+    "ci95": [
+     0.035733674433726416,
+     0.328843736361309
+    ],
+    "p": 8.701256838066268e-05,
+    "treated_pre": 0.8181818181818182,
+    "treated_post": 0.23809523809523808,
+    "control_pre": 0.36363636363636365,
+    "control_post": 0.9761904761904762
+   },
+   "batt_broad|primary": {
+    "rate_ratio": 0.34374999999999994,
+    "ci95": [
+     0.14844496613263372,
+     0.7960125936127863
+    ],
+    "p": 0.012685752551952893,
+    "treated_pre": 1.4545454545454546,
+    "treated_post": 0.6,
+    "control_pre": 1.0,
+    "control_post": 1.2
+   },
+   "batt_broad|sensitivity": {
+    "rate_ratio": 0.11130952380926115,
+    "ci95": [
+     0.04432728743865088,
+     0.2795075179773185
+    ],
+    "p": 2.9606955504940536e-06,
+    "treated_pre": 1.4545454545454546,
+    "treated_post": 0.40476190476190477,
+    "control_pre": 1.0,
+    "control_post": 2.5
+   }
+  },
+  "population_model": {
+   "cohort_units": 57414,
+   "pre_recall_failures": 30,
+   "observed_in_window": 9,
+   "scenarios": {
+    "sales_weighted": {
+     "shape_beta": 1.2154667341901315,
+     "shape_ci95": [
+      0.862982974619311,
+      1.711921816968097
+     ],
+     "scale_months": 19204.934320578115,
+     "rate_per_1000_at_horizon": 1.5947492884864933,
+     "rate_ci95": [
+      1.1466195196986884,
+      4.579390821252314
+     ],
+     "units_affected_at_horizon": 91.56093564916353,
+     "expected_no_remedy": 27.081047212149105,
+     "expected_ci95": [
+      18.18514638590895,
+      93.360726294059
+     ],
+     "oe_oe": 0.3323357449767459,
+     "oe_ci95": [
+      0.1519650649082763,
+      0.6308767647565187
+     ]
+    },
+    "equal_split": {
+     "shape_beta": 1.269036686476752,
+     "shape_ci95": [
+      0.903231964387495,
+      1.7829906105193971
+     ],
+     "scale_months": 14208.692558949691,
+     "rate_per_1000_at_horizon": 1.7597419867262325,
+     "rate_ci95": [
+      1.269385812436599,
+      5.349282143552845
+     ],
+     "units_affected_at_horizon": 101.0338264258999,
+     "expected_no_remedy": 30.506046900026952,
+     "expected_ci95": [
+      20.301899846606265,
+      108.49980701960212
+     ],
+     "oe_oe": 0.29502347614865987,
+     "oe_ci95": [
+      0.13490351964858147,
+      0.5600464559504782
+     ]
+    },
+    "all_oldest_MY": {
+     "shape_beta": 0.9831541664373659,
+     "shape_ci95": [
+      0.6874234989121795,
+      1.406108631015299
+     ],
+     "scale_months": 105645.8830203852,
+     "rate_per_1000_at_horizon": 1.021961695094791,
+     "rate_ci95": [
+      0.7551754010812309,
+      2.7790616698871555
+     ],
+     "units_affected_at_horizon": 58.67490876217233,
+     "expected_no_remedy": 15.059627313767754,
+     "expected_ci95": [
+      10.256710917160744,
+      53.88236817234649
+     ],
+     "oe_oe": 0.5976243510204303,
+     "oe_ci95": [
+      0.27327190850307387,
+      1.1344771749962208
+     ]
+    },
+    "all_newest_MY": {
+     "shape_beta": 2.989464812252337,
+     "shape_ci95": [
+      2.0903945644695847,
+      4.2752215374050895
+     ],
+     "scale_months": 306.9233955716329,
+     "rate_per_1000_at_horizon": 30.502273179171617,
+     "rate_ci95": [
+      12.390438947221279,
+      280.78802070784974
+     ],
+     "units_affected_at_horizon": 1751.2575123089593,
+     "expected_no_remedy": 503.301937926689,
+     "expected_ci95": [
+      220.89326202390833,
+      3972.3543150194228
+     ],
+     "oe_oe": 0.017881910085772293,
+     "oe_ci95": [
+      0.008176747966302843,
+      0.033945435461263294
+     ]
+    }
+   }
+  },
+  "alerting_pchart": {
+   "alert_months": 5,
+   "nameplate_months": 605,
+   "recalls_with_alert": "3/16",
+   "first_in_family_with_alert": "1/7",
+   "detail": [
+    {
+     "campaign": "20V630000",
+     "model": "K",
+     "report_date": "2020-10-13",
+     "follow_on": false,
+     "alert_before": false,
+     "lead_months": null
+    },
+    {
+     "campaign": "21V127000",
+     "model": "K",
+     "report_date": "2021-03-01",
+     "follow_on": true,
+     "alert_before": false,
+     "lead_months": null
+    },
+    {
+     "campaign": "20V701000",
+     "model": "B",
+     "report_date": "2020-11-13",
+     "follow_on": false,
+     "alert_before": false,
+     "lead_months": null
+    },
+    {
+     "campaign": "21V560000",
+     "model": "B",
+     "report_date": "2021-07-23",
+     "follow_on": true,
+     "alert_before": true,
+     "lead_months": 0
+    },
+    {
+     "campaign": "21V650000",
+     "model": "B",
+     "report_date": "2021-08-20",
+     "follow_on": true,
+     "alert_before": true,
+     "lead_months": 1
+    },
+    {
+     "campaign": "24V481000",
+     "model": "B",
+     "report_date": "2024-06-27",
+     "follow_on": false,
+     "alert_before": false,
+     "lead_months": null
+    },
+    {
+     "campaign": "24V812000",
+     "model": "B",
+     "report_date": "2024-10-31",
+     "follow_on": true,
+     "alert_before": false,
+     "lead_months": null
+    },
+    {
+     "campaign": "22V162000",
+     "model": "I",
+     "report_date": "2022-03-16",
+     "follow_on": false,
+     "alert_before": false,
+     "lead_months": null
+    },
+    {
+     "campaign": "23V040000",
+     "model": "I",
+     "report_date": "2023-02-01",
+     "follow_on": true,
+     "alert_before": false,
+     "lead_months": null
+    },
+    {
+     "campaign": "25V836000",
+     "model": "I",
+     "report_date": "2025-12-04",
+     "follow_on": false,
+     "alert_before": false,
+     "lead_months": null
+    },
+    {
+     "campaign": "26V028000",
+     "model": "I",
+     "report_date": "2026-01-22",
+     "follow_on": true,
+     "alert_before": false,
+     "lead_months": null
+    },
+    {
+     "campaign": "26V030000",
+     "model": "I",
+     "report_date": "2026-01-22",
+     "follow_on": true,
+     "alert_before": false,
+     "lead_months": null
+    },
+    {
+     "campaign": "26V630000",
+     "model": "I",
+     "report_date": "2026-10-01",
+     "follow_on": true,
+     "alert_before": false,
+     "lead_months": null
+    },
+    {
+     "campaign": "23V434000",
+     "model": "3",
+     "report_date": "2023-06-19",
+     "follow_on": false,
+     "alert_before": true,
+     "lead_months": 5
+    },
+    {
+     "campaign": "24V700000",
+     "model": "L",
+     "report_date": "2024-09-20",
+     "follow_on": false,
+     "alert_before": false,
+     "lead_months": null
+    },
+    {
+     "campaign": "25V655000",
+     "model": "L",
+     "report_date": "2025-10-01",
+     "follow_on": true,
+     "alert_before": false,
+     "lead_months": null
+    }
+   ]
+  }
+ }
+}

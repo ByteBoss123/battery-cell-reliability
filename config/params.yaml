@@ -1,0 +1,44 @@
+# Pre-registered analysis parameters. Changing any value here changes published results;
+# every run records a hash of this file in outputs/run_manifest.json.
+seed: 0
+cells:
+  eol_capacity_ah: 0.88            # end of life = 80% of 1.1 Ah nominal (Severson et al.)
+  early_failure_cycles: 550         # early-failure class threshold (Severson et al. classification)
+  bootstrap_draws: 1000
+  spc:
+    phase1_batch: "2017-05-12"
+    ewma_lambda: 0.2
+    sigma_k: 3.0
+  doe:
+    near_tested_radius: 0.5         # standardized distance; optimum search stays inside tested region
+    target_t80_min: [9.8, 10.2]
+  conformal_level: 0.90
+field:
+  snapshot_date: "2026-11-13"
+  battery_definition: component     # component | broad
+  min_incident_year: 2009
+  age_origin_month: 10              # vehicle age measured from Oct 1 of (model year - 1)
+  weibull_horizon_months: 48
+  corrective_action:
+    treated: {model: B, max_my: 2019}
+    control: {model: L, max_my: 2019}
+    pre: ["2019-01-01", "2020-10-01"]
+    rollout_excluded: ["2020-11-01", "2022-06-01"]
+    post_primary_end: "2024-07-01"  # before the control's own battery recall (24V700, Sep 2024)
+    post_sensitivity_end: "2025-12-01"
+  population_model:
+    campaign: 21V560000
+    units: 57414
+    model_years: [2017, 2018, 2019]
+    my_weights_sales: [23876, 18019, 16418]   # GM-reported US sales: 2016+2017, 2018, 2019
+    censor_date: "2020-10-31"
+    eval_window: ["2022-07-01", "2024-07-31"]
+    horizon_months: 96
+  alerting:
+    baseline_months: 12
+    min_baseline_months: 6
+    sigma_k: 3.0
+    min_complaints: 10
+    min_battery: 3
+    lookback_months: 12
+    follow_on_months: 24
