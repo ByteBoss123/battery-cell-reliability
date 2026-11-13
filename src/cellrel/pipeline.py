@@ -16,6 +16,7 @@ from .config import Paths, file_sha256, load_params
 from .ingest.severson import build_cells
 from .quality import as_records
 from .reliability import bootstrap_b_life, fit_weibull, ks_pvalue, log_param_cov
+from .spec import spec_deviation
 
 log = logging.getLogger("cellrel")
 
@@ -219,6 +220,7 @@ def run(paths: Paths | None = None) -> dict:
     spc_tbl, m["cells"]["spc"] = cell_spc(cells, pc["spc"])
     m["cells"]["doe"] = cell_doe(cells, pc["doe"])
     m["cells"]["screening"] = screening.run(cells, pc["early_failure_cycles"], pc["conformal_level"], params["seed"])
+    m["cells"]["spec_deviation"] = spec_deviation(cells, params["cell_spec"])
 
     log.info("field: summary / weibull / affected population / corrective action / alerting")
     c = con.execute("SELECT * FROM stg_complaints").df()

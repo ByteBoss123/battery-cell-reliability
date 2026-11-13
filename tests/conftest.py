@@ -16,3 +16,12 @@ def metrics():
 @pytest.fixture(scope="session")
 def golden():
     return json.load(open(ROOT / "tests" / "golden_v1.json"))
+
+
+@pytest.fixture(scope="session")
+def duck(metrics):
+    """Read-only warehouse connection, opened only after the pipeline has (re)built the file."""
+    import duckdb
+
+    from cellrel.config import Paths
+    return duckdb.connect(str(Paths().warehouse), read_only=True)

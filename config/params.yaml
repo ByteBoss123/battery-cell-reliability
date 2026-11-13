@@ -42,3 +42,9 @@ field:
     min_battery: 3
     lookback_months: 12
     follow_on_months: 24
+cell_spec:                          # A123 APR18650M1A datasheet (A123 Systems)
+  part: APR18650M1A
+  nominal_capacity_ah: 1.1
+  charge_voltage_v: 3.6
+  recommended_fast_charge_a: 5.0    # "5A to 3.6V CCCV, 15 min"
+  standard_charge_a: 1.5            # "1.5A to 3.6V CCCV, 45 min"

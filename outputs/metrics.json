@@ -334,6 +334,25 @@
      "max": 0.913
     }
    }
+  },
+  "spec_deviation": {
+   "max_recommended_c_rate": 4.545,
+   "cells_above_spec": 114,
+   "cells_total": 124,
+   "policies_above_spec": 64,
+   "median_life_within_spec": 1755.0,
+   "median_life_above_spec": 706.5,
+   "life_ratio_above_vs_within_batch_adjusted": 0.4849512780995947,
+   "ci95": [
+    0.4198496195487683,
+    0.5601475651762808
+   ],
+   "p": 7.578732184929679e-23,
+   "initial_capacity_vs_nominal": {
+    "median_q2_ah": 1.0557,
+    "nominal_ah": 1.1,
+    "cells_below_nominal": 124
+   }
   }
  },
  "field": {

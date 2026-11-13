@@ -11,6 +11,7 @@ dependencies = ["numpy", "pandas", "scipy", "statsmodels", "scikit-learn", "life
 
 [project.optional-dependencies]
 dev = ["pytest", "ruff"]
+services = ["pymysql", "pymongo", "kafka-python"]
 
 [project.scripts]
 cellrel = "cellrel.cli:main"

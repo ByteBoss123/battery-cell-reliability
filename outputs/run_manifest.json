@@ -1,9 +1,9 @@
 {
  "cellrel_version": "1.0.0",
  "python": "3.13.18",
- "started_utc": "2026-11-13T20:39:50.667665+00:00",
- "finished_utc": "2026-11-13T20:40:00.689980+00:00",
- "params_sha256": "bdd8c0c4920256bb237fc74a7626bd6a2f6eec73c581b64ac8a60c970bbe7556",
+ "started_utc": "2026-11-13T22:06:22.067658+00:00",
+ "finished_utc": "2026-11-13T22:06:31.821308+00:00",
+ "params_sha256": "5aa028c97ec8c6b11c8f4b88bbe2b9be745715ba4ac3acc12127ff439575fb95",
  "raw_sha256": {
   "SOURCE_COMMIT.txt": "5c0aedcafe435d7ab0535bff7c5105c3c8d5b584a5494beca7b0d5fafbe5e5ab",
   "nhtsa_battery_recall_units.csv": "8f87fd9329920877cc0f7a517598edc2b796098581aeef9cce2b62fff1a15efc",
