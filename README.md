@@ -1,5 +1,7 @@
 # Battery Cell Reliability & Field Failure Analytics
 
+[![ci](https://github.com/ByteBoss123/battery-cell-reliability/actions/workflows/ci.yml/badge.svg)](https://github.com/ByteBoss123/battery-cell-reliability/actions/workflows/ci.yml)
+
 A reproducible reliability pipeline for battery cells and EV field data. It answers the four questions a cell quality and field-reliability team gets asked, using public, real data only:
 
 | Question | Method | Answer |
@@ -65,7 +67,7 @@ make ingest         # optional: refresh the NHTSA snapshot from the live API (ne
   - Western Electric rules fire on constructed patterns.
 - **Ingestion client** tested against a fake transport: retry on 429, "400 = no data", name-variant discovery and deduplication.
 - **Golden regression:** a full pipeline run must reproduce every published number in this README (`tests/golden_v1.json`). It caught a real issue during the refactor, described below.
-- CI: `.github/workflows/ci.yml` runs lint and tests on push. The workflow file is included, but it has not yet run on GitHub.
+- CI: GitHub Actions runs lint and the full test suite on every push (passing).
 
 ## Results
 
